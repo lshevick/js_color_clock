@@ -7,7 +7,7 @@ const clockBar = document.querySelector('.clock-progress-bar');
 const clockDisplay = document.querySelector('.clock-display');
 const clockFace = document.querySelector('.clock-display');
 const clock = document.querySelector('.clock');
-
+const docBody = document.querySelector('body');
 
 
 
@@ -48,15 +48,23 @@ let updateTime = () => {
     
     console.log(hexTime);
     
+    docBody.style.background = hexTime;
     clock.style.backgroundColor = hexTime;
+    clock.style.transition = 'all 0.2s ease-in-out';
 
     // hover over time shows Hex code
-    clockDisplay.addEventListener('mouseover', function(e) {
+    
+    clockDisplay.addEventListener('mousemove', function(e) {
+        e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
 
-        setTimeout(function() {
-        e.target.style.backgroundColor = '';
-        }, 500)
     })
+    clockDisplay.addEventListener('mouseover', function(e) {
+            e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
+    });
+    clockDisplay.addEventListener('mouseout', function(e) {
+        e.target.innerHTML = time;
+    });
+
 
 
 }
