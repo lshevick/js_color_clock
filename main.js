@@ -7,15 +7,14 @@ const clockBar = document.querySelector('.clock-progress-bar');
 const clockDisplay = document.querySelector('.clock-display');
 const clockFace = document.querySelector('.clock-display');
 
-// const today = new Date();
-// const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+
 
 
 let updateTime = () => {
-    const today = new Date();
-    let hours = today.getHours();
-    let minutes = today.getMinutes();
-    let seconds = today.getSeconds();
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
     if (minutes < 10) {
         minutes = '0' + minutes
     }
@@ -25,6 +24,10 @@ let updateTime = () => {
     const time = hours + ':' + minutes + ':' + seconds;
     clockDisplay.innerHTML = time;
     console.log(time);
+    
+    // function to convert seconds of a minute to a percentage
+    let percentSecs = Math.floor((seconds / 60) * 100);
+    console.log(percentSecs);
 }
 updateTime(); // logs current time on page load & updates clock
 
@@ -32,7 +35,6 @@ updateTime(); // logs current time on page load & updates clock
 setInterval(function() {
     updateTime();
 }, 1000);
-
 
 
 })();
