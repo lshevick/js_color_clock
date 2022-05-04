@@ -10,17 +10,20 @@
     const docBody = document.querySelector('body');
     
     
-    
+    // gets current time
     const now = new Date();
     let hours = now.getHours();
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
+    const time = `${hours}:${minutes}:${seconds}`;
+    
+    // console.log() the time in hexidecimal format
     let hexHours = parseInt(hours * 255 / 23).toString(16);
     let hexMinutes = parseInt(minutes * 255 / 59).toString(16);
     let hexSecs = parseInt(seconds * 255 / 59).toString(16);
     let hexTime = `#${hexHours}${hexMinutes}${hexSecs}`;
-    const time = `${hours}:${minutes}:${seconds}`;
     
+    // hovering over time shows current hex code
     const hovering = () => {
         clockDisplay.addEventListener('mousemove', function (e) {
             e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
@@ -75,41 +78,11 @@
         }
 
         console.log(time);
-
-
-
-        // console.log() the time in hexidecimal format
-
-        let hexHours = parseInt(hours * 255 / 23).toString(16);
-        let hexMinutes = parseInt(minutes * 255 / 59).toString(16);
-        let hexSecs = parseInt(seconds * 255 / 59).toString(16);
-
-
-        let hexTime = `#${hexHours}${hexMinutes}${hexSecs}`;
-
-
-
         console.log(hexTime);
 
         docBody.style.background = hexTime;
         clock.style.backgroundColor = hexTime;
         clock.style.transition = 'all 0.2s ease-in-out';
-
-        // hover over time shows Hex code
-
-        // clockDisplay.addEventListener('mousemove', function (e) {
-        //     e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
-
-        // })
-        // clockDisplay.addEventListener('mouseover', function (e) {
-        //     e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
-        // });
-        // clockDisplay.addEventListener('mouseout', function (e) {
-        //     e.target.innerHTML = time;
-        // });
-
-
-
     }
     updateTime(); // logs current time on page load & updates clock
     // logs current time once every second
