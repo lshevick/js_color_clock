@@ -28,6 +28,11 @@ let updateTime = () => {
     // function to convert seconds of a minute to a percentage
     let percentSecs = Math.floor((seconds / 60) * 100);
     console.log(percentSecs);
+    
+    clockBar.style.width = percentSecs + '%';
+    clockBar.style.transition = 'all 0.2s ease-in-out';
+    
+
 }
 updateTime(); // logs current time on page load & updates clock
 
