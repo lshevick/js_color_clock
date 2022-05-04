@@ -8,23 +8,37 @@
     const clockFace = document.querySelector('.clock-display');
     const clock = document.querySelector('.clock');
     const docBody = document.querySelector('body');
-    
-    
+
+
     // gets current time
     const now = new Date();
     let hours = now.getHours();
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
     const time = `${hours}:${minutes}:${seconds}`;
-    
-    // console.log() the time in hexidecimal format
-    let hexHours = parseInt(hours * 255 / 23).toString(16);
-    let hexMinutes = parseInt(minutes * 255 / 59).toString(16);
-    let hexSecs = parseInt(seconds * 255 / 59).toString(16);
-    let hexTime = `#${hexHours}${hexMinutes}${hexSecs}`;
-    
-    // hovering over time shows current hex code
+
+    // function to convert seconds of a minute to a percentage
+    const percentBar = () => {
+        const now = new Date();
+        let seconds = now.getSeconds();
+        let percentSecs = Math.floor((seconds / 60) * 100);
+        console.log(percentSecs);
+        clockBar.style.width = percentSecs + '%';
+        clockBar.style.transition = 'all 0.2s ease-in-out';
+    };
+    percentBar();
+    setInterval(function () {
+        percentBar();
+    }, 1000);
+
     const hovering = () => {
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        let hexHours = parseInt(hours * 255 / 23).toString(16);
+        let hexMinutes = parseInt(minutes * 255 / 59).toString(16);
+        let hexSecs = parseInt(seconds * 255 / 59).toString(16);
         clockDisplay.addEventListener('mousemove', function (e) {
             e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
 
@@ -39,23 +53,6 @@
     setInterval(function () {
         hovering();
     }, 1000);
-    
-    // function to convert seconds of a minute to a percentage
-    const percentBar = () => {
-        const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let seconds = now.getSeconds();
-        let percentSecs = Math.floor((seconds / 60) * 100);
-        console.log(percentSecs);
-        clockBar.style.width = percentSecs + '%';
-        clockBar.style.transition = 'all 0.2s ease-in-out';
-    };
-    percentBar();
-    setInterval(function () {
-        percentBar();
-    }, 1000);
-
 
     let updateTime = () => {
         const now = new Date();
@@ -70,12 +67,12 @@
         }
         const time = `${hours}:${minutes}:${seconds}`;
         clockDisplay.innerHTML = time;
-        
-        if (hovering()) {
-            clockDisplay.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
-        } else {
-            clockDisplay.innerHTML = time;
-        }
+
+        let hexHours = parseInt(hours * 255 / 23).toString(16);
+        let hexMinutes = parseInt(minutes * 255 / 59).toString(16);
+        let hexSecs = parseInt(seconds * 255 / 59).toString(16);
+        let hexTime = `#${hexHours}${hexMinutes}${hexSecs}`;
+
 
         console.log(time);
         console.log(hexTime);
@@ -90,6 +87,11 @@
         updateTime();
     }, 1000);
 
+    if (hovering()) {
+        clockDisplay.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
+    } else {
+        clockDisplay.innerHTML = time;
+    }
 
 
 })();
