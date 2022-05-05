@@ -5,7 +5,6 @@
     // 4. console.log percentage of a minute that the current sec represent
     const clockBar = document.querySelector('.clock-progress-bar');
     const clockDisplay = document.querySelector('.clock-display');
-    const clockFace = document.querySelector('.clock-display');
     const clock = document.querySelector('.clock');
     const docBody = document.querySelector('body');
 
@@ -22,14 +21,14 @@
         const now = new Date();
         let seconds = now.getSeconds();
         let percentSecs = Math.floor((seconds / 60) * 100);
-        console.log(percentSecs);
+        // console.log(percentSecs);
         clockBar.style.width = percentSecs + '%';
         clockBar.style.transition = 'all 0.2s ease-in-out';
     };
-    percentBar();
     setInterval(function () {
         percentBar();
     }, 1000);
+    percentBar();
 
     const hovering = () => {
         const now = new Date();
@@ -39,9 +38,9 @@
         let hexHours = parseInt(hours * 255 / 23).toString(16);
         let hexMinutes = parseInt(minutes * 255 / 59).toString(16);
         let hexSecs = parseInt(seconds * 255 / 59).toString(16);
+
         clockDisplay.addEventListener('mousemove', function (e) {
             e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
-
         })
         clockDisplay.addEventListener('mouseover', function (e) {
             e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
@@ -53,18 +52,17 @@
     setInterval(function () {
         hovering();
     }, 1000);
+    hovering();
 
     let updateTime = () => {
         const now = new Date();
         let hours = now.getHours();
         let minutes = now.getMinutes();
         let seconds = now.getSeconds();
-        if (minutes < 10) {
-            minutes = '0' + minutes
-        }
-        if (seconds < 10) {
-            seconds = '0' + seconds
-        }
+        hours = (hours < 10) ? '0' + hours : hours;
+        minutes = (minutes < 10) ? '0' + minutes : minutes;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+
         const time = `${hours}:${minutes}:${seconds}`;
         clockDisplay.innerHTML = time;
 
@@ -73,25 +71,30 @@
         let hexSecs = parseInt(seconds * 255 / 59).toString(16);
         let hexTime = `#${hexHours}${hexMinutes}${hexSecs}`;
 
-
         console.log(time);
         console.log(hexTime);
 
         docBody.style.background = hexTime;
         clock.style.backgroundColor = hexTime;
         clock.style.transition = 'all 0.2s ease-in-out';
+
+        // logs current time once every second
     }
-    updateTime(); // logs current time on page load & updates clock
-    // logs current time once every second
     setInterval(function () {
         updateTime();
     }, 1000);
-
-    if (hovering()) {
-        clockDisplay.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
-    } else {
-        clockDisplay.innerHTML = time;
-    }
+    updateTime(); // logs current time on page load & updates clock
+    
+    document.addEventListener('click', function () {
+        let armed = window.getComputedStyle(document.querySelector('.clock-display')).getPropertyValue('border-top-style');
+        
+        if (armed === 'hidden') {
+            console.log('hey');
+            clockDisplay.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
+        } else {
+            clockDisplay.innerHTML = time;
+        }
+    }, false);
 
 
 })();
