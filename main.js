@@ -1,4 +1,6 @@
 (function () {
+'use strict';
+
     // 1. create a time variable to use in further functions 
     //2. create function to interact with the DOM and be able to
     // 3. change the clock on the HTML page
@@ -8,6 +10,7 @@
     const clock = document.querySelector('.clock');
     const docBody = document.querySelector('body');
 
+    let isHovering = false;
 
     // gets current time
     const now = new Date();
@@ -30,29 +33,32 @@
     }, 1000);
     percentBar();
 
-    const hovering = () => {
-        const now = new Date();
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        let seconds = now.getSeconds();
-        let hexHours = parseInt(hours * 255 / 23).toString(16);
-        let hexMinutes = parseInt(minutes * 255 / 59).toString(16);
-        let hexSecs = parseInt(seconds * 255 / 59).toString(16);
+    // const hovering = () => {
+    //     const now = new Date();
+    //     let hours = now.getHours();
+    //     let minutes = now.getMinutes();
+    //     let seconds = now.getSeconds();
+    //     let hexHours = parseInt(hours * 255 / 23).toString(16);
+    //     let hexMinutes = parseInt(minutes * 255 / 59).toString(16);
+    //     let hexSecs = parseInt(seconds * 255 / 59).toString(16);
 
-        clockDisplay.addEventListener('mousemove', function (e) {
-            e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
-        })
-        clockDisplay.addEventListener('mouseover', function (e) {
-            e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
-        });
-        clockDisplay.addEventListener('mouseout', function (e) {
-            e.target.innerHTML = time;
-        });
-    }
-    setInterval(function () {
-        hovering();
-    }, 1000);
-    hovering();
+    //     clockDisplay.addEventListener('mousemove', function (e) {
+    //         e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
+    //     })
+    //     clockDisplay.addEventListener('mouseover', function (e) {
+    //         e.target.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
+    //     });
+    //     clockDisplay.addEventListener('mouseout', function (e) {
+    //         e.target.innerHTML = time;
+    //     });
+    // }
+    // setInterval(function () {
+    //     hovering();
+    // }, 1000);
+    // hovering();
+
+    clockDisplay.addEventListener('mouseover', () => isHovering = true);
+    clockDisplay.addEventListener('mouseout', () => isHovering = false);
 
     let updateTime = () => {
         const now = new Date();
@@ -63,6 +69,7 @@
         minutes = (minutes < 10) ? '0' + minutes : minutes;
         seconds = (seconds < 10) ? '0' + seconds : seconds;
 
+        
         const time = `${hours}:${minutes}:${seconds}`;
         clockDisplay.innerHTML = time;
 
@@ -70,9 +77,15 @@
         let hexMinutes = parseInt(minutes * 255 / 59).toString(16);
         let hexSecs = parseInt(seconds * 255 / 59).toString(16);
         let hexTime = `#${hexHours}${hexMinutes}${hexSecs}`;
-
+        
         console.log(time);
         console.log(hexTime);
+        
+        if (isHovering) {
+            clockDisplay.innerHTML = `${hexHours}:${hexMinutes}:${hexSecs}`;
+        } else {
+            clockDisplay.innerHTML = time;
+        }
 
         docBody.style.background = hexTime;
         clock.style.backgroundColor = hexTime;
@@ -97,4 +110,4 @@
     }, false);
 
 
-})();
+})();``
